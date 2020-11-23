@@ -1,0 +1,41 @@
+/*Eg 1: Input: a1b10
+       Output: abbbbbbbbbb
+Eg: 2: Input: b3c6d15
+          Output: bbbccccccddddddddddddddd
+The number varies from 1 to 99.*/
+
+#include <stdio.h>
+#include <string.h>
+int main() {
+    char a[100],ch;
+    int i,j,count;
+    scanf("%s",a);
+    for (i= 0;i <strlen(a); i++)
+    {
+        if (a[i]>='1' && a[i]<='9')
+        {
+            count=(count*10)+(a[i]-'0');
+        }
+        else if (count>0)
+        {
+            count--;
+            for (j= 0; j <count; j++) {
+                printf("%c",ch);
+            }
+            count=0;
+        }
+        if (a[i]>'9')
+        {
+            ch=a[i];
+            printf("%c",a[i]);
+        }
+        if (i==strlen(a)-1)
+        {
+           --count;
+            for (j= 0; j <count; j++) {
+                printf("%c",ch);
+            }
+        }
+    }
+    return 0;
+}
