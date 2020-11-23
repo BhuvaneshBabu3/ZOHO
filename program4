@@ -1,0 +1,32 @@
+
+/*
+ *  Input: 12345
+       Output:
+1       5
+  2   4
+    3
+  2  4
+1      5
+ */
+#include <stdio.h>
+#include <string.h>
+void main()
+{
+    int a[5]={1,2,3,4,5};
+    char b[17]="Zoho  Programming";
+    for (int i = 0; i < 17; i++) {
+        for (int j = 0; j < 17; j++) {
+            if(i==j)
+            {
+                printf("%c",b[i]);
+            }
+//            printf("");
+            if (i+j==17-1 && i!=j)
+            {
+                printf("%c",b[j]);
+            }
+            printf(" ");
+        }
+        printf("\n");
+    }
+}
