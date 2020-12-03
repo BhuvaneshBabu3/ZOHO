@@ -1,0 +1,90 @@
+//
+// Permutation of given number and to find its maximum prime number
+//
+#include <stdio.h>
+#include <stdlib.h>
+void permutation(char *str, int start, int end);
+
+void swap(char *x, char *y);
+
+void check_prime(int Prime);
+
+unsigned int result[1000],k=0,prime[100],cnt=0;
+int num,temp1;
+void main()
+{
+    char arr[200];
+
+    int temp,count=0,n;
+    printf("\n Enter a number :");
+    scanf("%d",&num);
+    temp1=num;
+    printf("\n");
+    while (num)
+    {
+        temp=num%10;
+        arr[count]=temp+'0';
+        count++;
+        num=num/10;
+    }
+//    for (int i = 0; i < count; ++i) {
+//        printf("%c",arr[i]);
+//    }
+    permutation(arr,0,count-1);
+
+    for (int i = 0; i < k; ++i) {
+        printf("%d ",result[i]);
+        temp=result[i];
+        check_prime(temp);
+    }
+    printf("\n");
+    if (prime[0]==0)
+    {
+        printf("\n There is no prime number");
+    }
+    else
+    {
+        printf("%d is maximum prime number",prime[0]);
+    }
+
+}
+
+void check_prime(int Prime) {
+    int flag=0;
+    for (int i = 2; i <= Prime/2; ++i) {
+        if (Prime%i==0)
+        {
+            flag=1;
+            break;
+        }
+    }
+    if(Prime!=1 && flag==0)
+    {
+        prime[cnt]=Prime;
+        cnt++;
+    }
+}
+
+void permutation(char *str, int start, int end) {
+    if (start==end)
+    {
+//        printf("\n%s",str);
+        result[k]=atoi(str);
+        k++;
+    }
+    else
+    {
+        for (int i = start; i <= end; i++) {
+            swap((str+start),(str+i));
+            permutation(str,start+1,end);
+            swap((str+start),(str+i));
+        }
+    }
+}
+
+void swap(char *x, char *y) {
+    char temp;
+    temp=*x;
+    *x=*y;
+    *y=temp;
+}
