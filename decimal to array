@@ -1,0 +1,27 @@
+//
+// decimal to array
+//
+#include <stdio.h>
+void main()
+{
+    int num=1387,arr[100],count=0,temp,k=0,t;
+    while (num)
+    {
+        temp=num%10;
+        arr[count]=temp;
+        count++;
+        num=num/10;
+    }
+    t=count;
+    while (k<count)
+    {
+        temp=arr[k];
+        arr[k]=arr[count];
+        arr[count]=temp;
+        k++;
+        count--;
+    }
+    for (int i = 1; i <= t; i++) {
+        printf("%d ",arr[i]);
+    }
+}
