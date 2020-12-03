@@ -1,0 +1,53 @@
+//
+// factors of n numbers and remove duplicates
+//
+
+#include <stdio.h>
+void factors(int);
+int cnt=0,count=0,len;
+void main()
+{
+    int arr[4]={6,9,8,15},i,temp;
+    len=sizeof(arr)/sizeof(arr[0]);
+    for (i = 0; i < len; i++) {
+        temp=arr[i];
+        count++;
+        factors(temp);
+    }
+}
+void factors(int num)
+{
+    int fact[100],j=0,length,arr[100];
+    for (int i = 1; i <= num; i++) {
+        if(num%i==0)
+        {
+            arr[cnt]=i;
+            cnt++;
+        }
+    }
+
+
+    if (count==len)
+    {
+      //  printf("\n \n%d",cnt);
+        for (int i = 0; i < cnt; i++) {
+            for (int k = i+1; k < cnt; ) {
+                if (arr[k] == arr[i])
+                {
+                    for (int l = k; l < cnt; l++) {
+                        arr[l] = arr[l + 1];
+                    }
+                    cnt--;
+                } else
+                {
+                    k++;
+                }
+            }
+        }
+        printf("\n");
+        for (int c = 0; c < cnt; c++) {
+            printf("%d ",arr[c]);
+        }
+    }
+
+}
