@@ -1,0 +1,39 @@
+//
+// Created by Adminn on 07-12-2020.
+//
+#include <stdio.h>
+void swapOddPos(int arr[],int *start,int *size)
+{
+    int *p=arr,t,end,temp;
+    t=*size;
+    if (t%2==0)
+    {
+        t=t-1;
+    }
+    end=t-1;
+    for (int i = 0; i < end; ++i) {
+        if (i<end)
+        {
+            temp = *(p+i);
+            *(p+i) = *(p+end);
+            *(p+end) = temp;
+            i++;
+            end =end - 2;
+        }
+    }
+
+}
+void main()
+{
+    int size=8,arr[8]={1,2,3,4,5,6,7,8},start,end,len;
+    len=size;
+    start=0,end=size;
+    for (int i = 0; i < size; ++i) {
+        printf("%d ",arr[i]);
+    }
+    swapOddPos(arr,&start,&size);
+    printf("\n After swapping \n");
+    for (int i = 0; i < size; ++i) {
+        printf("%d ",arr[i]);
+    }
+}
