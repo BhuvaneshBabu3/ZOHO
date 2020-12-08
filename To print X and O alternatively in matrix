@@ -1,0 +1,44 @@
+//
+// Created by Adminn on 05-12-2020.
+//
+#include <stdio.h>
+# define R 8
+#define C 8
+void main()
+{
+    int row=0,col=0,m=R,n=C;
+    char ch='x',a[R][C];
+    while (row<m && col<n)
+    {
+        for (int i = col; i < n; i++) {
+            a[row][i]=ch;
+        }
+        row++;
+        for (int i = row; i < m; ++i) {
+            a[i][n-1]=ch;
+        }
+        n--;
+        if (row<m) {
+            for (int i = n - 1; i >= col; i--) {
+                a[m - 1][i] = ch;
+            }
+        }
+        m--;
+        if (col<n)
+        {
+            for (int i = m-1; i >= row ; i--) {
+                a[i][col]=ch;
+            }
+        }
+        col++;
+
+//        ch=(ch=='b')?ch='s':'b';
+        ch=ch^'G'-'0';
+    }
+    for (int i = 0; i < R; ++i) {
+        for (int j = 0; j < C; ++j) {
+            printf("%c ",a[i][j]);
+        }
+        printf("\n");
+    }
+}
