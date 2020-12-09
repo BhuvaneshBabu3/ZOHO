@@ -1,0 +1,50 @@
+//
+// Created by Adminn on 09-12-2020.
+//
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+void main()
+{
+    int size,len,c=0,pos;
+    char *names[10][10],n[50],*p,grandfather[50];
+    printf("Enter number of inputs");
+    scanf("%d",&size);
+    for (int i = 0; i < size; ++i) {
+        for (int j = 0; j < 2; ++j) {
+            scanf("%s",n);
+            len=sizeof(n);
+            p=(char *)malloc(len+1);
+            strcpy(p,n);
+            names[i][j]=p;
+            printf("\t");
+        }
+        printf("\n");
+    }
+    for (int i = 0; i < size; ++i) {
+        for (int j = 0; j < 2; ++j) {
+            printf("%s    ",names[i][j]);
+        }
+        printf("\n");
+    }
+
+    printf("Enter the name to find the grandson");
+    scanf("%s",grandfather);
+
+    printf("the grand children of %s is :",grandfather);
+    for (int i = 0; i < size; ++i) {
+        if (strcmp(names[i][1],grandfather)==0)
+        {
+            for (int j = 0; j < size; ++j) {
+                if (strcmp(names[j][1],names[i][0])==0)
+                {
+                    printf("%s ",names[j][0]);
+                    c++;
+                }
+            }
+        }
+    }
+
+    printf("\nNumber of grandchildren : %d\n",c);
+}
+
