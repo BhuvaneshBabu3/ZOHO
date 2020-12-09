@@ -1,0 +1,21 @@
+//
+// Created by Adminn on 09-12-2020.
+//
+#include <stdio.h>
+void main()
+{
+    char *words[]={"Welcome","to","programming","in","c"},*temp;
+    int size=(sizeof(words) / sizeof(char *)),j=0,i=size-1;
+//    printf("%d",i);
+    while (j<i)
+    {
+        temp=words[j];
+        words[j]=words[i];
+        words[i]=temp;
+        j++;
+        i--;
+    }
+    for (int k = 0; k < size; ++k) {
+        printf("%s ",words[k]);
+    }
+}
