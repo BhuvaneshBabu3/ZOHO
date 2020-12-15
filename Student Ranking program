@@ -1,0 +1,158 @@
+//
+// Created by Adminn on 14-12-2020.
+//
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+int i=0;
+int randomnumbergenerator(int min, int max);
+
+void main()
+{
+    int n=100,size,choice,opt,cnt=0,count=0,max,MAX,Rand_id;
+    struct subject
+    {
+        int mat,phy,chem,eng,tam,comp,bio,ch;
+        float total,average,cut_off;
+    };
+    struct top
+    {
+        int rank_id,ID;
+        char st_name[30],NAME[30];
+    };
+    struct student
+    {
+        char name[30];
+        int id;
+        struct subject sub;
+        struct top t;
+    };
+    struct student s[n];
+//    printf("\n Enter number of students :");
+//    scanf("%d",&size);
+    while (1)
+    {
+        printf("\n Enter 1-Add details of the student\n 2-display the record \n 3-to find first mark\n 4-exit");
+        scanf("%d",&opt);
+        switch (opt) {
+            case 1:
+
+                printf("Enter name: ");
+                scanf("%s",s[i].name);
+
+                printf("\nEnter id:");
+                scanf("%d",&s[i].id);
+
+
+                printf("\nEnter English marks:");
+                scanf("%d",&s[i].sub.eng);
+
+                printf("\nEnter Tamil marks");
+                scanf("%d",&s[i].sub.tam);
+
+                printf("\nEnter Maths marks");
+                scanf("%d",&s[i].sub.mat);
+
+                printf("\nEnter Physics marks:");
+                scanf("%d",&s[i].sub.phy);
+
+                printf("\nEnter Chemistry marks:");
+                scanf("%d",&s[i].sub.chem);
+
+                printf("\n Enter 1 for computer science\n 2 for biology:");
+                scanf("%d",&choice);
+                switch (choice) {
+                    case 1:
+                        printf("\nEnter Computer marks:");
+                        scanf("%d",&s[i].sub.comp);
+                        s[i].sub.total=(s[i].sub.eng)+(s[i].sub.tam)+(s[i].sub.mat)+(s[i].sub.chem)+(s[i].sub.phy)+(s[i].sub.comp);
+                        s[i].sub.cut_off=(s[i].sub.chem)/2+(s[i].sub.phy)/2+s[i].sub.mat;
+                        break;
+
+                    case 2:
+                        printf("\nEnter Biology marks:");
+                        scanf("%d",&s[i].sub.bio);
+                        s[i].sub.total=(s[i].sub.eng)+(s[i].sub.tam)+(s[i].sub.mat)+(s[i].sub.chem)+(s[i].sub.phy)+(s[i].sub.bio);
+                        s[i].sub.cut_off=(s[i].sub.chem)/2+(s[i].sub.phy)/2+s[i].sub.mat;
+                        break;
+
+                    default:
+                        printf("\nPlease choose correct option:");
+                        break;
+                }
+                s[i].sub.average=(s[i].sub.total)/6;
+                i++;
+                break;
+            case 2:
+                        for (int j = 0; j < i; ++j) {
+                                printf("%s\t", s[j].name);
+                                printf("%d\t", s[j].id);
+                                printf("%f\t", s[j].sub.average);
+                                printf("%f\t", s[j].sub.cut_off);
+                                printf("\n");
+                        }
+                break;
+            case 3:
+                max=s[0].sub.total;
+                for (int j = 1; j < i; ++j) {
+                    if (s[j].sub.total>max)
+                    {
+                        max=s[j].sub.total;
+                    }
+                }
+                for (int j = 0; j < i; ++j) {
+                    if (s[j].sub.total==max)
+                    {
+                        s[count].t.rank_id=s[j].id;
+                        strcpy(s[count].t.st_name,s[j].name);
+                        count++;
+                    }
+                }
+                if (count>=1)
+                {
+                    MAX=s[0].sub.cut_off;
+                    for (int j = 1; j < i; ++j) {
+                        if (s[j].sub.cut_off>MAX)
+                        {
+                            MAX=s[j].sub.cut_off;
+                        }
+                    }
+                    for (int j = 0; j < i; ++j) {
+                        if (s[j].sub.cut_off==MAX)
+                        {
+                            s[cnt].t.ID=s[j].id;
+                            strcpy(s[cnt].t.NAME,s[j].name);
+                            cnt++;
+                        }
+                    }
+
+                    if (cnt>=1)
+                    {
+                       Rand_id= randomnumbergenerator(0,cnt-1);
+                        printf("\n the 1st rank is %s",s[Rand_id].t.NAME);
+                    } else
+                    {
+                        printf("\n the 1st rank is %s",s[0].t.NAME);
+                    }
+
+                } else
+                {
+                    printf("\n the 1st rank is %s",s[0].t.st_name);
+                }
+                break;
+            case 4:
+                exit(0);
+                break;
+            default:break;
+        }
+    }
+
+}
+
+int randomnumbergenerator(int min, int max) {
+    int rand_num=0;
+    for (int j = 0; j < 1; ++j) {
+        rand_num=(rand()%(max-min)) +min;
+    }
+    return rand_num;
+}
