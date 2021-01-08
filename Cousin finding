@@ -1,0 +1,226 @@
+//
+// Created by Adminn on 03-01-2021.
+//
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+struct family{
+    char name[30];
+    int gender;
+
+    struct family *father;
+    struct family *mother;
+    struct family *brother[30];
+    struct family *sister[30];
+    struct family *son[30];
+    struct family *daughter[30];
+    struct family *spouse;
+    int No_of_bro,No_of_sis,No_of_son,No_of_daughter;
+};
+struct Database
+{
+    char name[30];
+    struct family *family;
+};
+struct Database db[100];
+int num_of_members=0;
+
+struct family *search_name(char name[30]) {
+    int i;
+    for (i = 0; i < num_of_members; ++i) {
+        if (strcmp(name,db[i].name)==0)
+        {
+            return db[i].family;
+        }
+    }
+    return NULL;
+}
+
+struct family *getname(char name[30])
+{
+    struct family *family=search_name(name);
+    if (family!=NULL)
+    {
+        return family;
+    }
+    family=(struct family*)malloc(sizeof(struct family));
+    strcpy(family->name,name);
+    family->No_of_bro=0;
+    family->No_of_sis=0;
+    family->No_of_son=0;
+    family->No_of_daughter=0;
+    family->father=NULL;
+    family->mother=NULL;
+    family->spouse=NULL;
+
+    strcpy(db[num_of_members].name,name);
+//    db[num_of_members++].family=family;
+    db[num_of_members].family=family;
+    num_of_members++;
+    return family;
+}
+
+
+void set_siblings(struct family *family, struct family *brothers[30], struct family *sisters[30], int no_of_brothers,
+                  int no_of_sisters) {
+    for (int i = 0; i < no_of_brothers; ++i) {
+        struct family *BROTHERS = brothers[i];
+        family->brother[i]=BROTHERS;
+        if (family->gender==1)
+        {
+//            BROTHERS->brother[BROTHERS->No_of_bro ++]=family;
+            BROTHERS->brother[BROTHERS->No_of_bro ]=family;
+            BROTHERS->No_of_bro =(BROTHERS->No_of_bro + 1);
+        } else
+        {
+//            BROTHERS->sister[BROTHERS->No_of_sis ++]=family;
+            BROTHERS->sister[BROTHERS->No_of_sis ]=family;
+            BROTHERS->No_of_sis=(BROTHERS->No_of_sis +1);
+        }
+    }
+    family->No_of_bro=no_of_brothers;
+    for (int i = 0; i < no_of_sisters; ++i) {
+        struct family *SISTERS = sisters[i];
+        family->sister[i]=SISTERS;
+        if (family->gender==1)
+        {
+//            SISTERS->sister[SISTERS->No_of_sis ++]=family;
+            SISTERS->brother[SISTERS->No_of_bro]=family;
+            SISTERS->No_of_bro=(SISTERS->No_of_bro +1);
+        } else
+        {
+//            SISTERS->brother[SISTERS->No_of_sis ++]=family;
+            SISTERS->sister[SISTERS->No_of_sis]=family;
+            SISTERS->No_of_sis=(SISTERS->No_of_sis +1);
+        }
+    }
+    family->No_of_sis=no_of_sisters;
+}
+void set_parent(struct family *Family, char *fathername, char *mothername) {
+    struct family* father=getname(fathername);
+    struct family* mother=getname(mothername);
+
+    father->spouse=mother;
+    mother->spouse=father;
+
+    set_siblings(Family,father->son,father->daughter,father->No_of_son,father->No_of_daughter);
+    if (Family->gender==1)
+    {
+        father->son[father->No_of_son]=Family;
+        mother->son[mother->No_of_son]=Family;
+        father->No_of_son=mother->No_of_son=(father->No_of_son +1);
+    } else
+    {
+        father->daughter[father->No_of_daughter]=Family;
+        mother->daughter[mother->No_of_daughter]=Family;
+        father->No_of_daughter=mother->No_of_daughter=(father->No_of_daughter +1);
+    }
+    Family->father=father;
+    Family->mother=mother;
+}
+
+
+void add_name(char name[30], int gender, char father[30], char mother[30]) {
+    struct family *family=getname(name);
+    family->gender=gender;
+    set_parent(family,father,mother);
+}
+void printperson(struct family *family)
+{
+    printf("name :%s\nfather_name :%s\nmother_name: %s\n",family->name,family->father->name,family->mother->name);
+}
+void population()
+{
+    for(int i=0;i<num_of_members;i++)
+    {
+        printperson(db[i].family);
+    }
+}
+void getDaughtername(char name[30])
+{
+    struct family *daughter;
+    daughter=getname(name);
+    int count=daughter->No_of_daughter;
+    for (int i = 0; i < count; ++i) {
+        printf("%s ",daughter->daughter[i]->name);
+    }
+    printf("\n");
+}
+void getSonname(char name[30])
+{
+    struct family *son=getname(name);
+    int count=son->No_of_son;
+    for (int i = 0; i < count; ++i) {
+        printf("%s ",son->son[i]->name);
+    }
+    printf("\n");
+}
+void getCousinName(char name[30])
+{
+    struct family *cousinname=search_name(name);
+    struct family *mother=search_name(cousinname->mother->name);
+    struct family *father=search_name(cousinname->father->name);
+    int gender,mother_bro,mother_sis,father_bro,father_sis,count;
+    mother_bro=mother->No_of_bro;
+    mother_sis=mother->No_of_sis;
+    father_bro=father->No_of_bro;
+    father_sis=father->No_of_sis;
+    gender=cousinname->gender;
+
+    if (gender==1)
+    {
+        if (father_sis>0)
+        {
+            for (int i = 0; i < father_sis; ++i) {
+                getDaughtername(father->sister[i]->name);
+            }
+        }
+        if (mother_bro>0)
+        {
+            for (int i = 0; i < mother_bro; ++i) {
+                getDaughtername(mother->brother[i]->name);
+            }
+        }
+    } else
+    {
+        if (father_sis>0)
+        {
+            for (int i = 0; i < father_sis; ++i) {
+                getSonname(father->sister[i]->name);
+            }
+        }
+        if (mother_bro>0)
+        {
+            for (int i = 0; i < mother_bro; ++i) {
+                getSonname(mother->brother[i]->name);
+            }
+        }
+    }
+}
+int main()
+{
+
+    add_name("raj",1,"sundar","nithya");
+    add_name("ravi",1,"sundar","nithya");
+    add_name("kumar",1,"sundar","nithya");
+    add_name("priya",0,"sundar","nithya");
+    add_name("sundar",1,"vignesh","keerthi");
+    add_name("nithya",0,"mohan","shivani");
+    add_name("vignesh",1,"raja","kalai");
+    add_name("shivani",0,"raja","kalai");
+    add_name("sankar",1,"dinesh","priya");
+    add_name("suganya",0,"kumar","divya");
+    add_name("shalini",0,"ravi","akshaya");
+    add_name("sangitha",0,"ravi","akshaya");
+
+    printf("\n cousin for sundar is:");
+    getCousinName("sundar");
+    printf("\n Cousin for nithya is:");
+    getCousinName("nithya");
+    printf("\n Cousin for sankar is:");
+    getCousinName("sankar");
+    printf("\n Cousin for sangitha is:");
+    getCousinName("sangitha");
+
+}
