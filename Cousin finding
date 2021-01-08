@@ -222,5 +222,5 @@ int main()
     getCousinName("sankar");
     printf("\n Cousin for sangitha is:");
     getCousinName("sangitha");
-
+    return 0;
 }
