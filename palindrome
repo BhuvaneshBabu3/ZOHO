@@ -1,0 +1,26 @@
+//
+// Created by Adminn on 08-01-2021.
+//
+#include <stdio.h>
+int palindrome(int num)
+{
+    int temp=0,div;
+    while (num)
+    {
+        div=num%10;
+        temp=(temp*10)+div;
+        num=num/10;
+    }
+    return temp;
+}
+void main()
+{
+    int num,res;
+    printf("\n Enter a number to find palindrome : ");
+    scanf("%d",&num);
+    res=palindrome(num);
+    if (num==res)
+    {
+        printf("It is palindrome");
+    }
+}
