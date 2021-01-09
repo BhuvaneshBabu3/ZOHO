@@ -1,0 +1,34 @@
+//
+// Created by Adminn on 09-01-2021.
+//
+
+#include <stdio.h>
+int nextpalindrome(int num)
+{
+    int res=0,div,temp=num;
+    while (num)
+    {
+        div=num%10;
+        res=(res*10)+div;
+        num=num/10;
+    }
+    if (res==temp)
+    {
+        printf("%d is next palindrome",res);
+        return 0;
+    } else
+    {
+        return 1;
+    }
+}
+void main()
+{
+    int num,flag=1;
+    printf("\n Enter a number to find next palindrome : ");
+    scanf("%d",&num);
+    while (flag!=0)
+    {
+        flag = nextpalindrome(num++);
+    }
+}
+
