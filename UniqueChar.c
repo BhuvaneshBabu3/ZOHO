@@ -7,7 +7,7 @@ char caseconvertion(char temp)
 {
     int toggle;
     char letter;
-    toggle='a'-'A';
+    toggle='a'^'A';
     letter =temp ^ toggle;
     return letter;
 }
